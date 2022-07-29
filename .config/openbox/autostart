@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+## Openbox autostart.sh
+## ====================
+
+## GNOME PolicyKit and Keyring
+eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg) &
+
+## Set wallpaper
+wal --backend haishoku --theme random_dark &
+
+feh --bg-scale '/home/wolf/Prismatic-Night/wallpapers/dark_lion.jpg'  &
+
+tint2 &
+
+## Volume control for systray
+(sleep 2s && pnmixer) &
+
+## Volume keys daemon
+xfce4-volumed &
+
+## Enable power management
+xfce4-power-manager &
+
+## Start Thunar Daemon
+nemo --daemon &
+
+## Detect and configure touchpad. See 'man synclient' for more info.
+if egrep -iq 'touchpad' /proc/bus/input/devices; then
+    synclient VertEdgeScroll=1 &
+    synclient TapButton1=1 &
+fi
+
+## Start xscreensaver
+xscreensaver -no-splash &
+
+## Start Clipboard manager
+(sleep 3s && clipit) &
+
+## Set keyboard settings - 250 ms delay and 25 cps (characters per second) repeat rate.
+## Adjust the values according to your preferances.
+#xset r rate 250 25 &
+
+## Turn on/off system beep
+#xset b off &
+
+## The following command runs hacks and fixes for #! LiveCD sessions.
+## Safe to delete after installation.
+#cb-cowpowers &
+
+## cb-welcome - post-installation script, will not run in a live session and
+## only runs once. Safe to remove.
+#(sleep 10s && cb-welcome --firstrun) &
+
+## cb-fortune - have Waldorf say a little adage
+#(sleep 120s && cb-fortune) &
+
+## Set monitor for home
+#~/.screenlayout/home.sh &
+
+## Run the conky
+#conky -q &
